@@ -14,24 +14,30 @@
   <img src="https://img.shields.io/badge/contributions-welcome-orange?style=flat-square"/>
 </p>
 
-This repository contains materials on Quantum Machine Learning and other quantum computing topics, as well as Python code
-demos using [PennyLane](https://pennylane.ai), a cross-platform Python library for [differentiable
-programming](https://en.wikipedia.org/wiki/Differentiable_programming) of quantum computers.
+This repository contains resources on quantum machine learning, quantum chemistry, and quantum computing, as well as [PennyLane Demos](https://pennylane.ai/qml/demonstrations/) — coding demonstrations and tutorials
+demos using [PennyLane](https://pennylane.ai), a cross-platform Python library for [quantum differentiable
+programming](https://pennylane.ai/qml/glossary/quantum_differentiable_programming/).
 
 <a href="https://pennylane.ai/qml">
-  <img src="https://raw.githubusercontent.com/PennyLaneAI/qml/master/_static/readme_panel_new.png" width="900px">
+  <img src="https://raw.githubusercontent.com/PennyLaneAI/qml/master/_static/pennylane_demos_readme_panel_20241016.png" width="900px">
 </a>
 
-The content here will be presented in the form of [tutorial, demos and how-to's](https://pennylane.ai/qml/demonstrations/). Take a dive into quantum
-  computing with fully-coded implementations of major works.
+All tutorials are fully executable,
+and can be downloaded as Jupyter Notebooks and Python scripts.
+Explore all things PennyLane on our [website](https://pennylane.ai)
+and take a dive into quantum
+computing with fully coded implementations of quantum algorithms and
+cutting-edge research with [PennyLane Demos](https://pennylane.ai/qml/demonstrations/).
 
-Explore these materials on our website: https://pennylane.ai. All tutorials are fully executable,
-and can be downloaded as Jupyter notebooks and Python scripts.
 
 ## Contributing
 
-You can contribute by submitting a demo via a pull request implementing a recent
-quantum computing paper/result.
+To submit a demo of your own, you can choose between two options: a community demo or a PennyLane Demo. For new contributors, we recommend following the [instructions to submit a community demo](https://pennylane.ai/qml/demos_submission/#community-demo), which usually include code that supports a research paper or project, and which can be of various formats.
+
+If you would like to submit an executable PennyLane Demo hosted on the pennylane.ai website, we strongly suggest first getting in touch with the PennyLane Team with your idea. We take great care to make sure all PennyLane Demos are useful, helpful, and impactful for the PennyLane community, so your submission will also receive a technical and content review from the experts in our team.
+
+You can contribute a PennyLane Demo by submitting a pull request that implements a recent and/or valuable
+research paper or result.
 
 ### Adding demos
 
