@@ -18,3 +18,11 @@ def file_sha(path: Path) -> bytes:
         m.update(f.read())
 
         return m.digest()
+
+def clean_dir(path: Path) -> None:
+    """Create dir at `path`. If a dir exists at path, it will be
+    removed before being re-created."""
+    if path.exists():
+        shutil.rmtree(path)
+    
+    path.mkdir(parents=True)

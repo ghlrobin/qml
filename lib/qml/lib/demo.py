@@ -11,6 +11,8 @@ import subprocess
 from enum import Enum
 import re
 import functools
+import lxml.html
+import json
 
 logger = getLogger("qml")
 
@@ -64,8 +66,8 @@ class Demo:
         """Other files in the demo's directory."""
         return tuple(
             p
-            for p in self.path.iterdir()
-            if p not in {self.py_file, self.metadata_file, self.requirements_file}
+            for p in self.path.rglob("**/*")
+            if p.is_file() and p not in {self.py_file, self.metadata_file, self.requirements_file}
         )
 
     @property
@@ -165,6 +167,51 @@ def build(
     cmd.extend((str(sphinx_dir), str(build_dir / target.value)))
     sphinx_env = os.environ | {"DEMO_STAGING_DIR": str(stage_dir.resolve())}
     subprocess.run(cmd, env=sphinx_env).check_returncode()
+
+    for demo in demos:
+        _pack(build_dir / "pack", build_dir / target.value, sphinx_dir / "demos", demo)
+
+def _pack(pack_dir: Path, sphinx_output: Path, sphinx_gallery_output: Path, demo: Demo):
+    def link_rewriter(link: str):
+        if "_images/" in link:
+            _, path = link.split("_images/", maxsplit=2)
+        
+            new_link = f"_images/{path}"
+
+            dest = pack_dir / demo.name /  "_images"
+            dest.mkdir(exist_ok=True)
+
+            shutil.copy(
+                sphinx_output / "_images" / path, dest / path
+            )
+            return new_link
+        
+        return link
+    
+    dest = pack_dir / demo.name
+    fs.clean_dir(dest)
+
+    with open((sphinx_output / "demos" / demo.name).with_suffix(".fjson"), "r") as f:
+        html_body = json.load(f)["body"]
+
+    html_body = lxml.html.rewrite_links(html_body, link_rewriter)
+
+    with open(dest / "body.html", "w") as f:
+        f.write(html_body)
+
+    shutil.copy(
+        (sphinx_gallery_output / demo.name).with_suffix(".ipynb"), dest / "demo.ipynb"
+    )
+    
+    shutil.copy(demo.metadata_file, dest / "metadata.json")
+    shutil.copy(demo.py_file, dest / "demo.py")
+    for resource in demo.resources:
+        shutil.copy(
+            resource, dest / resource.relative_to(demo.path)
+        )
+
+
+
 
 
 def _install_build_dependencies(venv: Virtualenv, build_dir: Path):
